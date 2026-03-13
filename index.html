@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>사무엘 & 만디 — Our Story</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --red: #c0112b;
+    --deep-red: #7a0018;
+    --blood: #3d0009;
+    --black: #080808;
+    --charcoal: #121212;
+    --lime: #aaff00;
+    --white: #f5f0ee;
+    --blush: #ffd6d6;
+    --gold: #d4a853;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Nanum Myeongjo', serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── PETAL CANVAS ── */
+  #petals {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(192,17,43,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(170,255,0,0.05) 0%, transparent 60%),
+      linear-gradient(180deg, #080808 0%, #150005 50%, #080808 100%);
+  }
+
+  .hero-line {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, rgba(192,17,43,0.4), transparent);
+    animation: lineGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes lineGlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  .kdrama-badge {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.5em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .hero-date {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 9vw, 7rem);
+    font-weight: 700;
+    font-style: italic;
+    text-align: center;
+    line-height: 1.05;
+    opacity: 0;
+    animation: fadeUp 1.2s ease 1s forwards;
+  }
+
+  .hero-title .name-samuel { color: var(--lime); }
+  .hero-title .amp { color: var(--red); font-size: 0.7em; }
+  .hero-title .name-mandy { color: var(--blush); }
+
+  .hero-korean {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.3em;
+    margin-top: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.4s forwards;
+  }
+
+  .hero-tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(0.9rem, 2vw, 1.15rem);
+    color: var(--gold);
+    margin-top: 1rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.7s forwards;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 2.5s forwards;
+  }
+
+  .scroll-hint span {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(180deg, var(--red), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 7rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.6em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--red), transparent);
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-style: italic;
+    line-height: 1.2;
+    margin-bottom: 2.5rem;
+  }
+
+  h2 .highlight { color: var(--red); }
+  h2 .highlight-lime { color: var(--lime); }
+
+  p {
+    font-size: 1.05rem;
+    line-height: 2;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 1.5rem;
+  }
+
+  .korean-inline {
+    color: var(--red);
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.9em;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--red), var(--deep-red), transparent);
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .divider-diamond {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 8px; height: 8px;
+    background: var(--red);
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 2.5rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--red), var(--deep-red), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 3.5rem;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.7s ease;
+  }
+
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -2.55rem;
+    top: 0.4rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 10px var(--red);
+  }
+
+  .timeline-date {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-text {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* ── PHOTO GALLERY ── */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .photo-slot {
+    aspect-ratio: 3/4;
+    background: rgba(192,17,43,0.07);
+    border: 1px solid rgba(192,17,43,0.25);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .photo-slot:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 40px rgba(192,17,43,0.3);
+  }
+
+  .photo-slot img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: rgba(255,255,255,0.2);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+  }
+
+  .photo-placeholder .icon { font-size: 2rem; opacity: 0.3; }
+
+  /* ── VIDEO SECTION ── */
+  .video-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .video-slot {
+    aspect-ratio: 16/9;
+    background: rgba(192,17,43,0.07);
+    border: 1px solid rgba(192,17,43,0.25);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .video-slot video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+
+  .video-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: rgba(255,255,255,0.2);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+  }
+
+  .video-placeholder .play-icon {
+    width: 50px; height: 50px;
+    border: 1px solid rgba(192,17,43,0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    opacity: 0.4;
+  }
+
+  /* ── LOVE LETTER ── */
+  .letter-wrap {
+    background: rgba(192,17,43,0.05);
+    border: 1px solid rgba(192,17,43,0.2);
+    border-radius: 6px;
+    padding: 3rem 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .letter-wrap::before {
+    content: '❝';
+    position: absolute;
+    top: 1rem; left: 1.5rem;
+    font-size: 5rem;
+    color: rgba(192,17,43,0.1);
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+  }
+
+  .letter-wrap p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 2.1;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .letter-sig {
+    margin-top: 2rem;
+    text-align: right;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--lime);
+    font-size: 1.1rem;
+  }
+
+  /* ── PROMISE SECTION ── */
+  .promise-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .promise-card {
+    background: rgba(192,17,43,0.06);
+    border: 1px solid rgba(192,17,43,0.2);
+    border-radius: 6px;
+    padding: 1.8rem;
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+
+  .promise-card:hover {
+    background: rgba(192,17,43,0.12);
+    border-color: rgba(192,17,43,0.5);
+  }
+
+  .promise-num {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--red);
+    margin-bottom: 0.75rem;
+  }
+
+  .promise-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.75);
+    margin: 0;
+  }
+
+  /* ── FINAL ── */
+  .final-section {
+    text-align: center;
+    padding: 8rem 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .final-korean {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-weight: 900;
+    color: var(--red);
+    display: block;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 60px rgba(192,17,43,0.5);
+    animation: heartbeat 2.5s ease-in-out infinite;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    10% { transform: scale(1.04); }
+    20% { transform: scale(1); }
+    30% { transform: scale(1.02); }
+    40% { transform: scale(1); }
+  }
+
+  .final-translation {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 3rem;
+  }
+
+  .final-names {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-style: italic;
+    color: var(--white);
+  }
+
+  .final-names .s { color: var(--lime); }
+  .final-names .m { color: var(--blush); }
+
+  .final-date-display {
+    margin-top: 1.5rem;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.5em;
+    color: rgba(255,255,255,0.2);
+  }
+
+  /* ── COUNTER ── */
+  .counter-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin: 3rem 0;
+    flex-wrap: wrap;
+  }
+
+  .counter-item {
+    text-align: center;
+  }
+
+  .counter-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 700;
+    color: var(--red);
+    display: block;
+    line-height: 1;
+  }
+
+  .counter-label {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+    display: block;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .video-grid { grid-template-columns: 1fr; }
+    .promise-grid { grid-template-columns: 1fr; }
+    .letter-wrap { padding: 2rem 1.5rem; }
+    section { padding: 5rem 1.5rem; }
+  }
+
+  /* ── FADE IN ON SCROLL ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<canvas id="petals"></canvas>
+
+<!-- ══════════════════════════════ HERO ══════════════════════════════ -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
+
+  <div class="kdrama-badge">우리의 이야기 — Our Story</div>
+  <div class="hero-date">20 May · Tshwane South College </div>
+
+  <h1 class="hero-title">
+    <span class="name-samuel">Samuel</span>
+    <br/>
+    <span class="amp">&</span>
+    <br/>
+    <span class="name-mandy">Mandy</span>
+  </h1>
+
+  <div class="hero-korean">사랑하는 우리 — Our Beloved Story</div>
+  <div class="hero-tagline">"The universe conspired so we could find each other."</div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ HOW WE MET ══════════════════════════════ -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section>
+  <div class="section-label">첫 만남 — The Beginning</div>
+  <h2>The day <span class="highlight">everything</span> changed</h2>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">20 MAY — TSHWANE SOUTH COLLEGE</div>
+      <div class="timeline-text">
+        It started with a fist bump. Just two people being introduced by a mutual friend on a regular college day — neither of us knowing that everything was about to change. <span class="korean-inline">운명이었어</span> — it was destiny.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">THE SECOND MEETING</div>
+      <div class="timeline-text">
+        The next time we crossed paths, Daddy pulled Mommy into a hug — unexpected, warm, and real. She was nervous and shy, but something shifted in that moment. Neither of us could explain it, but neither of us could stop thinking about the other either.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">THE PHONE NUMBER MISSION</div>
+      <div class="timeline-text">
+        Getting connected wasn't easy — the friend who introduced us was not exactly rushing to hand over a number. But love finds a way. Mommy got the digits, the messages started flowing, and what began as conversation slowly, beautifully, became something neither of us could deny. <span class="korean-inline">좋아해</span>.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">JUNE — WE BECAME OFFICIAL</div>
+      <div class="timeline-text">
+        We started dating and honestly — we both couldn't believe it. It felt almost too good. Mommy thought Baby would leave. But he didn't. He stayed. He showed up. Every single day, he chose her.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">CLOSER EVERY DAY</div>
+      <div class="timeline-text">
+        Daddy moved closer. Every day after college she'd come over, and every day felt like a blessing. Even when life at home was heavy, Love made it lighter — just by being there. He became her peace. <span class="korean-inline">당신은 나의 전부야</span> — you are my everything.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">TODAY & FOREVER</div>
+      <div class="timeline-text">
+        Distance tested us. New friends, new spaces, new challenges — but we face them together. We talk. We grow. We choose each other, again and again. She is the best thing that ever happened to him. And he is the best thing that ever happened to her. <span class="korean-inline">영원히 사랑해</span> — I will love you forever.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ GALLERY ══════════════════════════════ -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section>
+  <div class="section-label fade-in">우리 사진 — Our Moments</div>
+  <h2 class="fade-in">Frozen in <span class="highlight">time</span></h2>
+
+  <div class="gallery-grid fade-in">
+
+    <div class="photo-slot">
+      
+        <img src="i1.jpg" alt="Samuel and Mandy" /> 
+    </div>
+
+    <!-- PHOTO 2 -->
+    <div class="photo-slot">
+     
+       <img src="i2.jpg" alt="Samuel and Mandy" /> 
+    </div>
+
+    <!-- PHOTO 3 -->
+    <div class="photo-slot">
+      
+      <img src="i3.jpg" alt="Samuel and Mandy" /> 
+    </div>
+
+    <!-- PHOTO 4 -->
+    <div class="photo-slot">
+      
+     <img src="i4.jpg" alt="Samuel and Mandy" /> 
+    </div>
+
+    <!-- PHOTO 5 -->
+    <div class="photo-slot">
+      
+       <img src="i5.jpg" alt="Samuel and Mandy" /> 
+    </div>
+
+    <!-- PHOTO 6 -->
+    <div class="photo-slot">
+      
+       <img src="i6.jpg" alt="Samuel and Mandy" /> 
+    </div>
+<div class="photo-slot">
+      
+    <img src="i7.jpg" alt="Samuel and Mandy" /> 
+    </div>
+<div class="photo-slot">
+     
+     <img src="i8.jpg" alt="Samuel and Mandy" /> 
+    </div>
+<div class="photo-slot">
+      
+     <img src="i9.jpg" alt="Samuel and Mandy" /> 
+    </div>
+
+
+  </div>
+
+
+</section>
+
+<!-- ══════════════════════════════ VIDEOS ══════════════════════════════ -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section>
+  <div class="section-label fade-in">우리의 순간들 — Our Memories in Motion</div>
+  <h2 class="fade-in">In <span class="highlight">motion</span>, in love</h2>
+
+  <div class="video-grid fade-in">
+    <!-- VIDEO 1: Replace src with your video path -->
+    <div class="video-slot">
+      
+      </div>
+      <video controls src="VID-20260313-WA0014.mp4"></video> 
+    </div>
+
+    <!-- VIDEO 2 
+    <div class="video-slot">
+      <div class="video-placeholder">
+        <div class="play-icon">▶</div>
+        <span>VIDEO 2</span>
+      </div>
+     <video controls src="YOUR_VIDEO_2_PATH_HERE"></video> 
+    </div>-->
+  </div>
+</section>
+
+<!-- ══════════════════════════════ ICE CREAM / US ══════════════════════════════ -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section>
+  <div class="section-label fade-in">우리만의 것 — The Little Things</div>
+  <h2 class="fade-in">What makes <span class="highlight">us</span>, <em>us</em></h2>
+
+  <p class="fade-in">
+    It doesn't take a grand gesture to know this love is real. It's in the small things — <span class="korean-inline">작은 것들</span>. Ice cream on a warm afternoon, sitting close, saying nothing and feeling everything. Mommy introducing Daddy to Korean noodles, watching his face light up at flavours he never knew before. Sharing bites, sharing laughs, sharing a life.
+  </p>
+  <p class="fade-in">
+    She brought a whole world into his life — K-dramas, Korean food, that beautiful language that sounds like music. He brought safety, warmth, and a love that never flinched. Together they built something neither of them knew they needed until they had it.
+  </p>
+  <p class="fade-in">
+    <span class="korean-inline">우리는 하나야</span> — We are one. And every ice cream, every noodle bowl, every quiet moment together is proof of that.
+  </p>
+</section>
+
+<!-- ══════════════════════════════ COUNTER ══════════════════════════════ -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section style="text-align:center;">
+  <div class="section-label fade-in" style="justify-content:center;">우리의 시간 — Our Time Together</div>
+  <h2 class="fade-in" style="text-align:center;">Every day is a <span class="highlight">gift</span></h2>
+
+  <div class="counter-wrap fade-in" id="counters">
+    <div class="counter-item">
+      <span class="counter-num" id="cnt-days">—</span>
+      <span class="counter-label">Days Since We Met</span>
+    </div>
+    <div class="counter-item">
+      <span class="counter-num" id="cnt-months">—</span>
+      <span class="counter-label">Months of Love</span>
+    </div>
+    <div class="counter-item">
+      <span class="counter-num" id="cnt-hours">—</span>
+      <span class="counter-label">Hours Together</span>
+    </div>
+    <div class="counter-item">
+      <span class="counter-num" id="cnt-seconds" style="color:var(--lime);font-size:clamp(1.2rem,3vw,2rem);">—</span>
+      <span class="counter-label">Seconds of Us 🤍</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ LOVE LETTER ══════════════════════════════ -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section>
+  <div class="section-label fade-in">사랑의 편지 — A Letter From The Heart</div>
+  <h2 class="fade-in">From <span class="highlight-lime">Daddy</span> to <span class="highlight">Mommy</span></h2>
+
+  <div class="letter-wrap fade-in">
+    <p>
+      My love, my baby, my Mommy —
+    </p>
+    <p>
+      I don't think you fully understand what you mean to me. The day we met — a simple fist bump at Tshwane South College — I had no idea I was meeting the person who would become my entire world. But here we are, and I wouldn't change a single moment.
+    </p>
+    <p>
+      I remember the first time I pulled you into a hug. You were nervous, a little shy — but you hugged me back. And something in me just knew. <span class="korean-inline">이 사람이야</span> — it's this person. It's her.
+    </p>
+    <p>
+      I watched you carry weight that wasn't yours to carry. I saw how hard your days were, and all I wanted to do was be your soft place to land. I hope I've been that for you. I hope every ice cream date, every lazy afternoon, every moment we've shared has shown you that you are safe with me. That I'm not going anywhere.
+    </p>
+    <p>
+      You thought I would leave. I didn't. I never will.
+    </p>
+    <p>
+      You brought so much beauty into my life — Korean food, K-dramas, your laughter, your love, your whole self. You make ordinary days feel like scenes from a drama I never want to end. <span class="korean-inline">당신 덕분에 매일이 특별해</span> — because of you, every day is special.
+    </p>
+    <p>
+      We're still growing. Still learning how to love each other through the hard parts. But I choose you, baby. Through every obstacle, every misunderstanding, every moment of distance — I choose you. Every single time.
+    </p>
+    <p>
+      You are the best thing that has ever happened to me. And I will spend every day making sure you know it.
+    </p>
+    <p>
+      <span class="korean-inline">사랑해, 영원히.</span><br/>
+      I love you. Forever.
+    </p>
+    <div class="letter-sig">— Your Baby, Your Love, Your Daddy 🖤❤️</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ ENGAGEMENT ══════════════════════════════ -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section>
+  <div class="section-label fade-in">약혼 — The Next Chapter</div>
+  <h2 class="fade-in">She said <span class="highlight">Yes</span> 💍</h2>
+
+  <p class="fade-in">
+    As if the story wasn't already beautiful enough — Daddy got down and asked Mommy to be his forever. And she said yes. <span class="korean-inline">네, 영원히</span> — yes, forever. Around October, they exchanged rings and made it official in the most personal way. No grand announcement needed — just two people, two rings, and a promise that changed everything.
+  </p>
+  <p class="fade-in">
+    From a fist bump at college... to rings on their fingers. <span class="korean-inline">이게 바로 우리의 이야기야</span> — this is our story. And the best part? The wedding is coming. This year, they make it permanent. <span class="korean-inline">곧 결혼해요</span> — we're getting married soon.
+  </p>
+
+  <div class="promise-grid fade-in" style="margin-top:2.5rem;">
+    <div class="promise-card" style="grid-column: span 2; text-align:center; padding: 2.5rem;">
+      <div class="promise-num" style="justify-content:center; text-align:center;">💍 약혼 — ENGAGED</div>
+      <p class="promise-text" style="font-size:1.1rem; margin-top:1rem;">
+        "From the girl who thought he'd leave — to the woman wearing his ring.<br/>
+        <span class="korean-inline">우리 결혼하자</span> — Let's get married."
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ PROMISES ══════════════════════════════ -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section>
+  <div class="section-label fade-in">약속 — Promises</div>
+  <h2 class="fade-in">What I <span class="highlight">promise</span> you</h2>
+
+  <div class="promise-grid fade-in">
+    <div class="promise-card">
+      <div class="promise-num">01 — 약속</div>
+      <p class="promise-text">I promise to always be your safe place — your peace when the world feels heavy.</p>
+    </div>
+    <div class="promise-card">
+      <div class="promise-num">02 — 약속</div>
+      <p class="promise-text">I promise to never stop choosing you. Every morning, every argument, every season — I choose you.</p>
+    </div>
+    <div class="promise-card">
+      <div class="promise-num">03 — 약속</div>
+      <p class="promise-text">I promise to keep making memories — ice cream dates, new Korean food, late nights and laughter.</p>
+    </div>
+    <div class="promise-card">
+      <div class="promise-num">04 — 약속</div>
+      <p class="promise-text">I promise to grow with you. To communicate, to listen, to fight for us — never against you.</p>
+    </div>
+    <div class="promise-card">
+      <div class="promise-num">05 — 약속</div>
+      <p class="promise-text">I promise that the best days of our story haven't happened yet. We're just getting started, Mommy.</p>
+    </div>
+    <div class="promise-card">
+      <div class="promise-num">06 — 약속</div>
+      <p class="promise-text">I promise you this — you will never again wonder if you are loved. Because you are. Deeply. Completely. Always.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ FINAL ══════════════════════════════ -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<div class="final-section">
+  <span class="final-korean">사랑해</span>
+  <div class="final-translation">Saranghae — I love you</div>
+  <div class="final-names">
+    <span class="s">Samuel</span>
+    &nbsp;&hearts;&nbsp;
+    <span class="m">Mandy</span>
+  </div>
+  <div class="final-date-display">20 · 05 · FOREVER</div>
+</div>
+
+<!-- ══════════════════════════════ SCRIPTS ══════════════════════════════ -->
+<script>
+  // ── Falling Petals ──
+  const canvas = document.getElementById('petals');
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
+  const petals = [];
+  const PETAL_COUNT = 35;
+
+  for (let i = 0; i < PETAL_COUNT; i++) {
+    petals.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      size: Math.random() * 8 + 3,
+      speedY: Math.random() * 0.8 + 0.3,
+      speedX: (Math.random() - 0.5) * 0.5,
+      opacity: Math.random() * 0.35 + 0.05,
+      rotation: Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 0.02,
+      color: Math.random() > 0.5 ? '#c0112b' : '#ffb3c1'
+    });
+  }
+
+  function drawPetal(p) {
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rotation);
+    ctx.globalAlpha = p.opacity;
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, p.size, p.size * 0.55, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function animatePetals() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    petals.forEach(p => {
+      p.y += p.speedY;
+      p.x += p.speedX + Math.sin(p.y * 0.015) * 0.3;
+      p.rotation += p.rotSpeed;
+      if (p.y > canvas.height + 20) {
+        p.y = -20;
+        p.x = Math.random() * canvas.width;
+      }
+      drawPetal(p);
+    });
+    requestAnimationFrame(animatePetals);
+  }
+  animatePetals();
+
+  // ── Scroll Animations ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in, .timeline-item').forEach(el => observer.observe(el));
+
+  // ── Love Counter ──
+  const START_DATE = new Date('2025-05-20');
+
+  function getStats() {
+    const now = new Date();
+    const diffMs = now - START_DATE;
+    return {
+      days: Math.floor(diffMs / (1000 * 60 * 60 * 24)),
+      months: Math.floor(diffMs / (1000 * 60 * 60 * 24 * 30.44)),
+      hours: Math.floor(diffMs / (1000 * 60 * 60)),
+      seconds: Math.floor(diffMs / 1000)
+    };
+  }
+
+  function animateCount(el, target, cb) {
+    let current = 0;
+    const step = Math.ceil(target / 80);
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = current.toLocaleString();
+      if (current >= target) { clearInterval(timer); if (cb) cb(); }
+    }, 16);
+  }
+
+  let liveStarted = false;
+
+  function startLiveTick() {
+    if (liveStarted) return;
+    liveStarted = true;
+    const secEl = document.getElementById('cnt-seconds');
+    setInterval(() => {
+      secEl.textContent = getStats().seconds.toLocaleString();
+    }, 1000);
+  }
+
+  const counterObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      const s = getStats();
+      animateCount(document.getElementById('cnt-days'), s.days);
+      animateCount(document.getElementById('cnt-months'), s.months);
+      animateCount(document.getElementById('cnt-hours'), s.hours);
+      animateCount(document.getElementById('cnt-seconds'), s.seconds, startLiveTick);
+      counterObserver.disconnect();
+    }
+  }, { threshold: 0.3 });
+
+  counterObserver.observe(document.getElementById('counters'));
+</script>
+</body>
+</html>
